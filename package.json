@@ -9,10 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "ant-design-vue": "^4.2.1",
+    "googleapis": "^105.0.0",
     "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@types/node": "^20.12.8",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
