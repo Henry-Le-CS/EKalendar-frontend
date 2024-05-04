@@ -18,8 +18,10 @@
           class="text-[#005f69] font-bold underline"
           href="https://student.ueh.edu.vn/Home/Schedules"
           >https://student.ueh.edu.vn/Home/Schedules</a
-        >, chọn TKB Thứ - Tiết rồi Ctrl A xong Ctrl C nhé. Xong rồi Ctrl V hết
-        vào đây luôn. Đúng rồi, hết luônnnn !
+        >, chọn
+        <span class="text-[#005f69] font-bold underline">TKB Thứ - Tiết,</span>
+        rồi Ctrl A xong Ctrl C nhé. Xong rồi Ctrl V hết vào đây luôn. Đúng rồi,
+        hết luônnnn !
       </p>
 
       <a-textarea
