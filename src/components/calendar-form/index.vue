@@ -1,15 +1,16 @@
 <template>
-  <div
-    class="flex flex-col gap-8 items-center justify-center w-full lg:w-[60%]"
-  >
-    <h1 class="font-bold h-max">Bạn là sinh viên trường nàooo ?</h1>
-    <a-select
-      class="w-full"
-      ref="select"
-      v-model:value="university"
-      :options="uniOptions"
-      @change="handleChange"
-    ></a-select>
+  <div class="flex flex-col gap-8 items-start justify-start w-full lg:w-[60%]">
+    <div class="flex flex-col gap-3 w-full">
+      <h1 class="font-bold h-max">Bạn là sinh viên trường nàooo ?</h1>
+
+      <a-select
+        class="w-full"
+        ref="select"
+        v-model:value="university"
+        :options="uniOptions"
+        @change="handleChange"
+      ></a-select>
+    </div>
 
     <div class="flex flex-col items-center justify-start gap-4">
       <p class="text-sm">
@@ -37,7 +38,7 @@
       v-if="calendar"
       class="flex flex-col items-start justify-start gap-2 w-full"
     >
-      <span class="text-sm">Nhập tên lịch ở đây nè</span>
+      <h1 class="font-bold">Nhập tên lịch ở đây nè:</h1>
       <a-input
         v-model:value="calendarName"
         placeholder="Nhập tên lịch đi nè"
