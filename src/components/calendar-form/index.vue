@@ -159,7 +159,7 @@ function handleAddToCalendar() {
     google.accounts.oauth2
       .initTokenClient({
         client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID as string,
-        scope: 'https://www.googleapis.com/auth/calendar.events',
+        scope: 'https://www.googleapis.com/auth/calendar',
         callback,
       })
       .requestAccessToken();
