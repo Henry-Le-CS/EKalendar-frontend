@@ -31,11 +31,15 @@
     </div>
 
     <a-alert v-if="error" :message="error" type="error" show-icon />
-    <div>
-      <a-button id="g-auth2" type="primary" @click="handleAddToCalendar"
-        >Thêm vào Google Calendar</a-button
-      >
-    </div>
+
+    <a-button
+      :loading="loading"
+      :disabled="!calendar"
+      id="g-auth2"
+      type="primary"
+      @click="handleAddToCalendar"
+      >Thêm vào Google Calendar</a-button
+    >
   </div>
 </template>
 
@@ -43,6 +47,8 @@
 import { ref } from 'vue';
 import type { SelectProps } from 'ant-design-vue';
 import { googleSdkLoaded } from 'vue3-google-login';
+import { TokenResponse } from './types';
+import { endpoint } from '../../common/endpoint';
 
 const university = ref('ueh');
 const uniOptions = ref<SelectProps['options']>([
@@ -55,6 +61,7 @@ const uniOptions = ref<SelectProps['options']>([
 const pageText = ref('');
 const calendar = ref('');
 const error = ref('');
+const loading = ref(false);
 
 const handleChange = (value: string) => {
   console.log(`selected ${value}`);
@@ -62,8 +69,9 @@ const handleChange = (value: string) => {
 
 const handleInputChange = () => {
   const lines = pageText.value.split('\n');
+  loading.value = true;
 
-  fetch('http://localhost:8080/calendar', {
+  fetch(`${endpoint}/calendar`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -82,7 +90,42 @@ const handleInputChange = () => {
       }
 
       error.value = '';
-      calendar.value = r.Calendar;
+      calendar.value = r.Data;
+    })
+    .catch(err => {
+      calendar.value = '';
+      error.value = 'Có lỗi xảy ra: ' + err?.message || err;
+    });
+
+  loading.value = false;
+};
+
+const callback = (response: TokenResponse) => {
+  const { access_token: AccessToken, token_type: TokenType } = response;
+
+  fetch(`${endpoint}/calendar/add`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      Token: {
+        AccessToken,
+        TokenType,
+      },
+      Ics: calendar.value,
+      CalendarName: 'Tui test thôi nha',
+    }),
+  })
+    .then(res => res.json())
+    .then(r => {
+      if (r.Error) {
+        error.value = r.Error;
+        console.log(r);
+        return;
+      }
+
+      window.alert('Thêm lịch thành công !');
     })
     .catch(err => {
       calendar.value = '';
@@ -90,28 +133,11 @@ const handleInputChange = () => {
     });
 };
 
-type TokenResponse = {
-  /** The access token of a successful token response. */
-  access_token: string;
-  authuser: string;
-  /** The lifetime in seconds of the access token. */
-  expires_in: string;
-  /** Type of prompt presented to the user */
-  prompt: string;
-  /** A space-delimited list of scopes that are approved by the user. */
-  scope: string;
-  /** The type of the token issued. */
-  token_type: string;
-};
-
-const callback = (response: TokenResponse) => {
-  console.log('response', response);
-};
 function handleAddToCalendar() {
   googleSdkLoaded(google => {
     google.accounts.oauth2
       .initTokenClient({
-        client_id: 'CLIENT_ID',
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID as string,
         scope: 'https://www.googleapis.com/auth/calendar',
         callback,
       })
