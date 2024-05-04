@@ -35,7 +35,7 @@
     <a-alert v-if="error" :message="error" type="error" show-icon />
 
     <div
-      v-if="calendar"
+      v-if="calendar && !error"
       class="flex flex-col items-start justify-start gap-2 w-full"
     >
       <h1 class="font-bold">Nhập tên lịch ở đây nè:</h1>
@@ -48,7 +48,7 @@
 
     <a-button
       :loading="loading"
-      :disabled="!calendar || loading || !calendarName"
+      :disabled="!calendar || loading || !calendarName || error"
       id="g-auth2"
       type="primary"
       class="bg-[#005f69] font-bold"
