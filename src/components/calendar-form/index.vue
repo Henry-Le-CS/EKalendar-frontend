@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col gap-8 items-center justify-center gap-1 w-full lg:w-[60%]"
+    class="flex flex-col gap-8 items-center justify-center w-full lg:w-[60%]"
   >
     <h1 class="font-bold h-max">Bạn là sinh viên trường nàooo ?</h1>
     <a-select
