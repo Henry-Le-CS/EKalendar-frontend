@@ -32,7 +32,13 @@
       />
     </div>
 
-    <a-alert v-if="error" :message="error" type="error" show-icon />
+    <a-alert
+      v-if="error"
+      class="w-full"
+      :message="error"
+      type="error"
+      show-icon
+    />
 
     <div
       v-if="calendar && !error"
