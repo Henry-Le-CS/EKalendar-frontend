@@ -11,10 +11,17 @@
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
     "ant-design-vue": "^4.2.1",
+    "gapi": "^0.0.3",
+    "gapi-script": "^1.2.0",
     "googleapis": "^105.0.0",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-google-oauth2": "^1.5.10",
+    "vue3-google-login": "^2.0.26",
+    "vue3-google-oauth2": "^1.0.7"
   },
   "devDependencies": {
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.60",
     "@types/node": "^20.12.8",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",

@@ -32,8 +32,8 @@
 
     <a-alert v-if="error" :message="error" type="error" show-icon />
     <div>
-      <a-button type="primary" @click="handleAddToCalendar"
-        >Add to calendar</a-button
+      <a-button id="g-auth2" type="primary" @click="handleAddToCalendar"
+        >Thêm vào Google Calendar</a-button
       >
     </div>
   </div>
@@ -42,7 +42,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import type { SelectProps } from 'ant-design-vue';
-import { authorizeUser } from './google';
+import { googleSdkLoaded } from 'vue3-google-login';
 
 const university = ref('ueh');
 const uniOptions = ref<SelectProps['options']>([
@@ -90,7 +90,32 @@ const handleInputChange = () => {
     });
 };
 
-const handleAddToCalendar = () => {
-  authorizeUser();
+type TokenResponse = {
+  /** The access token of a successful token response. */
+  access_token: string;
+  authuser: string;
+  /** The lifetime in seconds of the access token. */
+  expires_in: string;
+  /** Type of prompt presented to the user */
+  prompt: string;
+  /** A space-delimited list of scopes that are approved by the user. */
+  scope: string;
+  /** The type of the token issued. */
+  token_type: string;
 };
+
+const callback = (response: TokenResponse) => {
+  console.log('response', response);
+};
+function handleAddToCalendar() {
+  googleSdkLoaded(google => {
+    google.accounts.oauth2
+      .initTokenClient({
+        client_id: 'CLIENT_ID',
+        scope: 'https://www.googleapis.com/auth/calendar',
+        callback,
+      })
+      .requestAccessToken();
+  });
+}
 </script>
