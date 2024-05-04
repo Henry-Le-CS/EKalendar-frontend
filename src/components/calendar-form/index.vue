@@ -18,9 +18,8 @@
           class="text-[#005f69] font-bold underline"
           href="https://student.ueh.edu.vn/Home/Schedules"
           >https://student.ueh.edu.vn/Home/Schedules</a
-        >
-        rồi Ctrl A xong Ctrl C nhé. Xong rồi Ctrl V hết vào đây luôn. Đúng rồi,
-        hết luônnnn !
+        >, chọn TKB Thứ - Tiết rồi Ctrl A xong Ctrl C nhé. Xong rồi Ctrl V hết
+        vào đây luôn. Đúng rồi, hết luônnnn !
       </p>
 
       <a-textarea
@@ -32,11 +31,24 @@
 
     <a-alert v-if="error" :message="error" type="error" show-icon />
 
+    <div
+      v-if="calendar"
+      class="flex flex-col items-start justify-start gap-2 w-full"
+    >
+      <span class="text-sm">Nhập tên lịch ở đây nè</span>
+      <a-input
+        v-model:value="calendarName"
+        placeholder="Nhập tên lịch đi nè"
+        required
+      />
+    </div>
+
     <a-button
       :loading="loading"
-      :disabled="!calendar"
+      :disabled="!calendar || loading || !calendarName"
       id="g-auth2"
       type="primary"
+      class="bg-[#005f69] font-bold"
       @click="handleAddToCalendar"
       >Thêm vào Google Calendar</a-button
     >
@@ -58,6 +70,7 @@ const uniOptions = ref<SelectProps['options']>([
   },
 ]);
 
+const calendarName = ref('');
 const pageText = ref('');
 const calendar = ref('');
 const error = ref('');
@@ -103,6 +116,11 @@ const handleInputChange = () => {
 const callback = (response: TokenResponse) => {
   const { access_token: AccessToken, token_type: TokenType } = response;
 
+  if (!calendarName.value) {
+    error.value = 'Nhập tên lịch voooooo';
+    return;
+  }
+
   fetch(`${endpoint}/calendar/add`, {
     method: 'POST',
     headers: {
@@ -114,7 +132,7 @@ const callback = (response: TokenResponse) => {
         TokenType,
       },
       Ics: calendar.value,
-      CalendarName: 'Tui test thôi nha',
+      CalendarName: calendarName.value,
     }),
   })
     .then(res => res.json())
