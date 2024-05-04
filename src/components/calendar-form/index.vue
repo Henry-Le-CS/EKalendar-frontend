@@ -87,7 +87,7 @@ const handleInputChange = () => {
   const lines = pageText.value.split('\n');
   loading.value = true;
 
-  fetch(`${endpoint}/calendar`, {
+  fetch(`${endpoint}/calendar/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
