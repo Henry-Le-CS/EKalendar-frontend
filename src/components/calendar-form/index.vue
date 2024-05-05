@@ -54,7 +54,7 @@
 
     <a-button
       :loading="loading"
-      :disabled="!calendar || loading || !calendarName || error"
+      :disabled="!calendar || !calendarName"
       id="g-auth2"
       type="primary"
       class="bg-[#005f69] font-bold"
@@ -93,7 +93,7 @@ const handleInputChange = () => {
   const lines = pageText.value.split('\n');
   loading.value = true;
 
-  fetch(`${endpoint}/calendar/`, {
+  fetch(`${endpoint}/calendar`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -106,12 +106,13 @@ const handleInputChange = () => {
   })
     .then(res => res.json())
     .then(r => {
+      error.value = '';
+
       if (r.Error) {
         error.value = r.Error;
         return;
       }
 
-      error.value = '';
       calendar.value = r.Data;
     })
     .catch(err => {
@@ -146,9 +147,10 @@ const callback = (response: TokenResponse) => {
   })
     .then(res => res.json())
     .then(r => {
+      error.value = '';
+
       if (r.Error) {
         error.value = r.Error;
-        console.log(r);
         return;
       }
 
