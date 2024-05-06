@@ -27,7 +27,7 @@
 
       <a-textarea
         v-model:value="pageText"
-        @change="handleInputChange"
+        @change="debounceCalendar"
         placeholder="Ctrl A -> Ctrl C -> Ctrl V"
       />
     </div>
@@ -78,6 +78,7 @@ import type { SelectProps } from 'ant-design-vue';
 import { googleSdkLoaded } from 'vue3-google-login';
 import { TokenResponse } from './types';
 import { endpoint } from '../../common/endpoint';
+import { debounce } from 'lodash';
 
 const university = ref('ueh');
 const uniOptions = ref<SelectProps['options']>([
@@ -97,7 +98,7 @@ const handleChange = (value: string) => {
   console.log(`selected ${value}`);
 };
 
-const handleInputChange = () => {
+const handleCalendarChange = () => {
   const lines = pageText.value.split('\n');
   loading.value = true;
 
@@ -131,6 +132,8 @@ const handleInputChange = () => {
 
   loading.value = false;
 };
+
+const debounceCalendar = debounce(handleCalendarChange, 400);
 
 const callback = (response: TokenResponse) => {
   const { access_token: AccessToken, token_type: TokenType } = response;
