@@ -52,15 +52,23 @@
       />
     </div>
 
-    <a-button
-      :loading="loading"
-      :disabled="!calendar || !calendarName"
-      id="g-auth2"
-      type="primary"
-      class="bg-[#005f69] font-bold"
-      @click="handleAddToCalendar"
-      >Thêm vào Google Calendar</a-button
-    >
+    <a-tooltip placement="bottom">
+      <template #title>
+        <span class="text-sm w-max">
+          Dùng <span class="font-bold">your_email@st.ueh.edu.vn</span> để thêm
+          lịch nhé !
+        </span>
+      </template>
+      <a-button
+        :loading="loading"
+        :disabled="!calendar || !calendarName"
+        id="g-auth2"
+        type="primary"
+        class="bg-[#005f69] font-bold"
+        @click="handleAddToCalendar"
+        >Thêm vào Google Calendar</a-button
+      >
+    </a-tooltip>
   </div>
 </template>
 
@@ -114,6 +122,7 @@ const handleInputChange = () => {
       }
 
       calendar.value = r.Data;
+      console.log(r.Data);
     })
     .catch(err => {
       calendar.value = '';
