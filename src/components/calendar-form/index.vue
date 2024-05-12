@@ -21,7 +21,7 @@
           >https://student.ueh.edu.vn/Home/Schedules</a
         >, chọn
         <span class="text-[#005f69] font-bold underline">TKB Thứ - Tiết,</span>
-        rồi Ctrl A xong Ctrl C nhé. Xong rồi Ctrl V hết vào đây luôn. Đúng rồi,
+        rồi Ctrl A toàn trang xong Ctrl C nhé. Xong rồi Ctrl V hết vào đây luôn. Đúng rồi,
         hết luônnnn !
       </p>
 
